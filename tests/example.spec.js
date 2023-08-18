@@ -5,7 +5,8 @@ const fs = require("fs");
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
-  const biography = "";
+  const biography =
+    "https://www.amazon.com/Best-Sellers-Kindle-Store-Biographies-Memoirs/zgbs/digital-text/154754011/ref=zg_bs_nav_digital-text_2_154606011";
   const business =
     "https://www.amazon.com/Best-Sellers-Kindle-Store-Business-Investing/zgbs/digital-text/154821011/ref=zg_bs_nav_digital-text_2_154606011";
 
@@ -13,8 +14,17 @@ const fs = require("fs");
     "https://www.amazon.com/Best-Sellers-Kindle-Store-Computers-Technology/zgbs/digital-text/156116011/ref=zg_bs_nav_digital-text_2_154606011";
   const health =
     "https://www.amazon.com/Best-Sellers-Kindle-Store-Health-Fitness-Dieting/zgbs/digital-text/156430011/ref=zg_bs_nav_digital-text_2_154606011";
+  const politics =
+    "https://www.amazon.com/Best-Sellers-Kindle-Store-Politics-Social-Sciences/zgbs/digital-text/305951011/ref=zg_bs_nav_digital-text_2_154606011";
+
+  const romance =
+    "https://www.amazon.com/Best-Sellers-Kindle-Store-Romance/zgbs/digital-text/158566011/ref=zg_bs_nav_digital-text_2_154606011";
+  const scienceFiction =
+    "https://www.amazon.com/Best-Sellers-Kindle-Store-Science-Fiction-Fantasy/zgbs/digital-text/668010011/ref=zg_bs_nav_digital-text_2_154606011";
   // Navigate to the Amazon Kindle Best Sellers page
-  await page.goto(tech);
+  const sports =
+    "https://www.amazon.com/Best-Sellers-Kindle-Store-Sports-Outdoors/zgbs/digital-text/159818011/ref=zg_bs_nav_digital-text_2_154606011";
+  await page.goto(sports);
 
   // Wait for the list of books to load
   await page.waitForSelector("#zg");
@@ -32,8 +42,12 @@ const fs = require("fs");
   // ];
 
   const bookList = [];
+
+  // only first 14 books from bookLinks
+  const bookListForm = bookLinks.slice(0, 14);
+
   // Loop through book URLs
-  for (const bookLink of bookLinks) {
+  for (const bookLink of bookListForm) {
     const bookPage = await browser.newPage();
     await bookPage.goto(bookLink);
 
@@ -139,7 +153,7 @@ const fs = require("fs");
   }
 
   const json = JSON.stringify(bookList, null, 2);
-  fs.writeFileSync(`category-tech.json`, json);
+  fs.writeFileSync(`category-sports.json`, json);
   console.log("done!");
 
   // Close the browser
